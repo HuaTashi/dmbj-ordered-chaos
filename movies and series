@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хроники Расхитителей гробниц — каталог</title>
+<style>
+  :root {
+    --bg: #1c1a17;
+    --paper: #e8dcc8;
+    --paper-dark: #d9cbb0;
+    --ink: #2b2620;
+    --ink-soft: #5a5040;
+    --red: #8b2e2e;
+    --red-bright: #b03a3a;
+    --border: #a89878;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 0%, transparent 50%);
+    color: var(--paper);
+    line-height: 1.65;
+    padding: 2rem 1rem 4rem;
+    min-height: 100vh;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* ── Заголовок ── */
+  header { text-align: center; margin-bottom: 2.5rem; }
+  h1 {
+    font-size: 1.9rem;
+    font-weight: normal;
+    letter-spacing: 1px;
+    color: var(--paper);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .subtitle {
+    color: #a89878;
+    font-style: italic;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  /* ── Вкладки ── */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--paper-dark);
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { background: rgba(232,220,200,0.08); color: var(--paper); }
+  .tab-btn.active {
+    background: var(--red);
+    color: var(--paper);
+    border-color: var(--red);
+    font-weight: bold;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* ── Карточка ── */
+  .card {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 3px;
+    padding: 1.4rem 1.6rem 1.2rem;
+    margin-bottom: 1.6rem;
+    position: relative;
+    box-shadow: 3px 4px 10px rgba(0,0,0,0.45);
+    transform: rotate(-0.3deg);
+    transition: transform 0.2s;
+  }
+  .card:nth-child(even) { transform: rotate(0.3deg); }
+  .card:hover { transform: rotate(0) translateY(-2px); }
+  /* «скотч» сверху */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 80px;
+    height: 18px;
+    background: rgba(180, 170, 140, 0.55);
+    border: 1px solid rgba(140,130,100,0.4);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .orig-title {
+    display: inline;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    cursor: pointer;
+    border-bottom: 1px dashed var(--ink-soft);
+  }
+  .orig-title .orig-text {
+    display: none;
+    font-style: normal;
+  }
+  .orig-title.open .orig-text { display: inline; }
+  .orig-title.open .orig-hint { display: none; }
+  .orig-hint { font-size: 0.8rem; }
+
+  .card-meta {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.7rem;
+  }
+  .card-desc { font-size: 0.95rem; margin-bottom: 0.8rem; }
+
+  /* ── Бейджи ── */
+  .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    background: rgba(139, 46, 46, 0.12);
+    color: var(--red);
+    border: 1px solid rgba(139, 46, 46, 0.35);
+    font-family: system-ui, sans-serif;
+  }
+  .badge-trio {
+    background: rgba(43, 38, 32, 0.1);
+    color: var(--ink);
+    border-color: rgba(43, 38, 32, 0.3);
+    font-weight: bold;
+  }
+
+  /* ── Раскрывашки ── */
+  details {
+    background: rgba(43, 38, 32, 0.05);
+    border-left: 2px solid var(--red);
+    border-radius: 0 3px 3px 0;
+    padding: 0.5rem 0.8rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--red);
+    font-size: 0.85rem;
+    user-select: none;
+    letter-spacing: 0.3px;
+  }
+  summary:hover { color: var(--red-bright); }
+  details p { margin-top: 0.4rem; color: var(--ink-soft); }
+
+  /* ── Карта рекомендаций ── */
+  .scroll-block {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 3px;
+    padding: 2rem 1.8rem;
+    box-shadow: 3px 4px 12px rgba(0,0,0,0.5);
+    position: relative;
+    border-top: 4px solid var(--red);
+    border-bottom: 4px solid var(--red);
+  }
+  .scroll-block h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: var(--red);
+    text-align: center;
+  }
+  .scroll-block p { color: var(--ink-soft); font-style: italic; text-align: center; }
+  .empty-note {
+    text-align: center;
+    color: #7a705e;
+    font-style: italic;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 500px) {
+    body { padding: 1rem 0.6rem 3rem; }
+    .card { padding: 1.1rem 1rem; transform: none !important; }
+    .tab-btn { font-size: 0.85rem; padding: 0.5rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Хроники Расхитителей гробниц</h1>
+  <p class="subtitle">каталог экранизаций · личное дело детектива</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="series">Сериалы</button>
+  <button class="tab-btn" data-tab="films">Фильмы</button>
+  <button class="tab-btn" data-tab="map">Карта рекомендаций</button>
+</div>
+
+<!-- ══ СЕРИАЛЫ ══ -->
+<div class="tab-panel active" id="series">
+
+  <div class="card">
+    <div class="card-title">
+      Личные заметки У Се
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Time Raiders, 吴邪私家笔记</span>
+      </span>
+    </div>
+    <div class="card-meta">2025 · сериал</div>
+    <p class="card-desc">Наследник рода расхитителей, ни разу не видевший настоящей гробницы, владелец антикварного магазина и архитектор отправляются в первое приключение... А третий дядя им и говорит: У Се, зайди в гробницу по-человечески. Первая встреча будущих друзей, первые монстры, первые тайны и очень-очень много подозрений.</p>
+    <div class="badges">
+      <span class="badge badge-trio">▲</span>
+      <span class="badge">Та же арка: 7 звёзд</span>
+      <span class="badge">Та же арка: Гнев моря</span>
+      <span class="badge">Начало</span>
+    </div>
+    <details>
+      <summary>Особенности</summary>
+      <p>Пересъёмка первых книг под руководством самого Саньшу. Цензура потопталась, но не сильно. Атмосфера присутствует.</p>
+    </details>
+    <details>
+      <summary>Если вы знакомы с серией</summary>
+      <p>Начало ремейк-серии с единым кастом.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      Затерянная гробница
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Lost Tomb, 盜墓筆記</span>
+      </span>
+    </div>
+    <div class="card-meta">2015 · сериал</div>
+    <p class="card-desc">У Се и ко разносят первую в жизни гробницу с целью спасения культурного наследия.</p>
+    <div class="badges">
+      <span class="badge badge-trio">▲</span>
+      <span class="badge">Та же арка: 7 звёзд</span>
+      <span class="badge">Та же арка: Аукцион</span>
+      <span class="badge">Начало</span>
+    </div>
+    <details>
+      <summary>Особенности</summary>
+      <p>Очень по мотивам, смешались змеи, шиби, люди... Отхождения от сюжета внезапны и кусучи. Во всём виноват Цю Декао (с) — или, возможно, Ваны.</p>
+    </details>
+    <details>
+      <summary>Если вы знакомы с серией</summary>
+      <p>Возможность оценить атмосферу самого первого сериала.</p>
+    </details>
+  </div>
+
+</div>
+
+<!-- ══ ФИЛЬМЫ ══ -->
+<div class="tab-panel" id="films">
+
+  <div class="card">
+    <div class="card-title">
+      Расхитители времени
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Time Raiders, 盗墓笔记</span>
+      </span>
+    </div>
+    <div class="card-meta">2016 · фильм</div>
+    <p class="card-desc">Напросился юный У Се из расхитительского рода в гости на работу к дяде, а попал в операцию по спасению мира.</p>
+    <div class="badges">
+      <span class="badge badge-trio">▲</span>
+      <span class="badge">Начало</span>
+    </div>
+    <details>
+      <summary>Особенности</summary>
+      <p>Очень по мотивам, AU в духе голливудских боевиков. Во всём виноват Цю Декао (с). Дичь, но задорно. При желании можно найти кучу каноничных и философских деталей. Без желания — посмеяться и оценить утанцовывание от ловушек.</p>
+    </details>
+    <details>
+      <summary>Если вы знакомы с серией</summary>
+      <p>Кто уже в курсе, найдёт зачатки знакомых идей и мыслей, моменты для построения теорий.</p>
+    </details>
+  </div>
+
+</div>
+
+<!-- ══ КАРТА РЕКОМЕНДАЦИЙ ══ -->
+<div class="tab-panel" id="map">
+  <div class="scroll-block">
+    <h2>Карта рекомендаций</h2>
+    <p>Рекомендованный порядок просмотра — личное мнение автора каталога, не истина в последней инстанции.</p>
+    <div class="empty-note">Здесь будет порядок просмотра.</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
