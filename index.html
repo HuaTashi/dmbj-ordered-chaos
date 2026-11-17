@@ -20,7 +20,6 @@
   body {
     font-family: Georgia, "Times New Roman", serif;
     background-color: var(--bg);
-    /* Легкая текстура для эффекта старой бумаги */
     background-image: 
       linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
@@ -55,7 +54,7 @@
     margin-bottom: 2rem;
     border-bottom: 2px solid var(--red);
     padding-bottom: 0;
-    overflow-x: auto; /* чтобы на телефоне не вылезали */
+    overflow-x: auto;
   }
   .tab-btn {
     font-family: inherit;
@@ -179,8 +178,8 @@
   summary:hover { color: var(--red-bright); }
   details p { margin-top: 0.4rem; color: var(--ink-soft); }
 
-  /* ── Карта рекомендаций ── */
-  .scroll-block {
+  /* ── Блоки в глоссарии ── */
+  .glossary-block {
     background: var(--paper);
     color: var(--ink);
     border-radius: 3px;
@@ -188,26 +187,54 @@
     box-shadow: 2px 4px 12px rgba(60, 40, 20, 0.15);
     position: relative;
     border-top: 4px solid var(--red);
-    border-bottom: 4px solid var(--red);
+    margin-bottom: 2rem;
   }
-  .scroll-block h2 {
+  .glossary-block h2 {
     font-size: 1.3rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 1.2rem;
     color: var(--red);
-    text-align: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
   }
-  .scroll-block p { color: var(--ink-soft); font-style: italic; text-align: center; }
-  .empty-note {
+  .glossary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(176, 156, 126, 0.4);
+  }
+  .glossary-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .glossary-symbol {
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    min-width: 40px;
     text-align: center;
-    color: #8a7a62;
+    font-weight: bold;
+    color: var(--red);
+    background: rgba(139, 46, 46, 0.08);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(139, 46, 46, 0.2);
+  }
+  .glossary-text strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+  .glossary-text span {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
     font-style: italic;
-    padding: 2rem 0;
   }
 
   @media (max-width: 500px) {
     body { padding: 1rem 0.6rem 3rem; }
     .card { padding: 1.1rem 1rem; transform: none !important; }
     .tab-btn { font-size: 0.85rem; padding: 0.5rem 0.7rem; }
+    .glossary-block { padding: 1.2rem 1rem; }
+    .glossary-item { flex-direction: column; gap: 0.5rem; }
   }
 </style>
 </head>
@@ -216,13 +243,13 @@
 
 <header>
   <h1>Хроники Расхитителей гробниц</h1>
-  <p class="subtitle">каталог экранизаций · личное дело детектива</p>
+  <p class="subtitle">каталог экранизаций · заметки</p>
 </header>
 
 <div class="tabs">
   <button class="tab-btn active" data-tab="series">Сериалы</button>
   <button class="tab-btn" data-tab="films">Фильмы</button>
-  <button class="tab-btn" data-tab="map">Карта рекомендаций</button>
+  <button class="tab-btn" data-tab="glossary">Глоссарий</button>
 </div>
 
 <!-- ══ СЕРИАЛЫ ══ -->
@@ -311,13 +338,121 @@
 
 </div>
 
-<!-- ══ КАРТА РЕКОМЕНДАЦИЙ ══ -->
-<div class="tab-panel" id="map">
-  <div class="scroll-block">
-    <h2>Карта рекомендаций</h2>
-    <p>Рекомендованный порядок просмотра — личное мнение автора каталога, не истина в последней инстанции.</p>
-    <div class="empty-note">Здесь будет порядок просмотра.</div>
+<!-- ══ ГЛОССАРИЙ ══ -->
+<div class="tab-panel" id="glossary">
+  
+  <div class="glossary-block">
+    <h2>Символы</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-symbol">▲</div>
+      <div class="glossary-text">
+        <strong>Железный Треугольник</strong>
+        <span>У Се, Ван Панцзы, Чжан Цилин</span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">🌸👓</div>
+      <div class="glossary-text">
+        <strong>ХэйХуа</strong>
+        <span>Хэй Сяцзы, Се Юйчэнь</span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">9</div>
+      <div class="glossary-text">
+        <strong>Мистическая Девятка</strong>
+        <span>Старшее поколение</span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">🐉</div>
+      <div class="glossary-text">
+        <strong>Семья Чжан</strong>
+        <span>Дракон</span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">👣</div>
+      <div class="glossary-text">
+        <strong>Следы</strong>
+        <span>В центре внимания любые другие персонажи</span>
+      </div>
+    </div>
   </div>
+
+  <div class="glossary-block">
+    <h2>Арки книг</h2>
+    
+    <div class="glossary-item">
+      <div class="glossary-symbol">1</div>
+      <div class="glossary-text">
+        <strong>«Гробница семи звёзд Лушан-вана»</strong>
+        <span>Первый том · Бейдж: <em>7 звёзд</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">2</div>
+      <div class="glossary-text">
+        <strong>«Гнев моря, погребённые пески» (怒海潜沙)</strong>
+        <span>Второй том · Бейдж: <em>Гнев моря</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">3</div>
+      <div class="glossary-text">
+        <strong>«Чудесное древо Циньлина»</strong>
+        <span>Третий том · Бейдж: <em>Бронзовое древо</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">4</div>
+      <div class="glossary-text">
+        <strong>«Заоблачный небесный дворец»</strong>
+        <span>Четвертый том · Бейдж: <em>Небесный дворец</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">5</div>
+      <div class="glossary-text">
+        <strong>«Призрачный город в Змеином болоте» (蛇沼鬼城) & «Назад к морю загадок» (谜海归巢)</strong>
+        <span>Пятый том · Бейджи: <em>Голмуд, Тамуто</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">6</div>
+      <div class="glossary-text">
+        <strong>«Древний терем в Иньшань» (阴山古楼)</strong>
+        <span>Шестой том · Бейдж: <em>Банай</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">7</div>
+      <div class="glossary-text">
+        <strong>«Каменные тени Цюнлун» (邛笼石影)</strong>
+        <span>Седьмой том · Бейджи: <em>Аукцион, Терем</em></span>
+      </div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-symbol">8</div>
+      <div class="glossary-text">
+        <strong>«Финал» (大结局)</strong>
+        <span>Восьмой том · Бейджи: <em>Терем, Финал</em></span>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 </div>
