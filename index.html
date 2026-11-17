@@ -6,12 +6,12 @@
 <title>Хроники Расхитителей гробниц — каталог</title>
 <style>
   :root {
-    --bg: #cbb894;         /* фон: старый пергамент */
-    --paper: #f2e8d5;      /* карточки: светлая бумага */
+    --bg: #cbb894;
+    --paper: #f2e8d5;
     --paper-dark: #e3d5bc;
-    --ink: #3b2f20;        /* цвет текста: тёмно-коричневый, как чернила */
-    --ink-soft: #6b5a43;   /* цвет второстепенного текста */
-    --red: #8b2e2e;        /* красные акценты */
+    --ink: #3b2f20;
+    --ink-soft: #6b5a43;
+    --red: #8b2e2e;
     --red-bright: #b03a3a;
     --border: #b09c7e;
   }
@@ -31,7 +31,6 @@
   }
   .container { max-width: 860px; margin: 0 auto; }
 
-  /* ── Заголовок ── */
   header { text-align: center; margin-bottom: 2.5rem; }
   h1 {
     font-size: 1.9rem;
@@ -47,7 +46,6 @@
     font-size: 0.95rem;
   }
 
-  /* ── Вкладки ── */
   .tabs {
     display: flex;
     gap: 0.5rem;
@@ -80,7 +78,6 @@
   .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-  /* ── Карточка ── */
   .card {
     background: var(--paper);
     color: var(--ink);
@@ -95,7 +92,6 @@
   .card:nth-child(even) { transform: rotate(0.3deg); }
   .card:hover { transform: rotate(0) translateY(-2px); }
   
-  /* «скотч» сверху */
   .card::before {
     content: "";
     position: absolute;
@@ -123,10 +119,7 @@
     cursor: pointer;
     border-bottom: 1px dashed var(--ink-soft);
   }
-  .orig-title .orig-text {
-    display: none;
-    font-style: normal;
-  }
+  .orig-title .orig-text { display: none; font-style: normal; }
   .orig-title.open .orig-text { display: inline; }
   .orig-title.open .orig-hint { display: none; }
   .orig-hint { font-size: 0.8rem; }
@@ -140,7 +133,6 @@
   }
   .card-desc { font-size: 0.95rem; margin-bottom: 0.8rem; }
 
-  /* ── Бейджи ── */
   .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
   .badge {
     font-size: 0.75rem;
@@ -150,6 +142,12 @@
     color: var(--red);
     border: 1px solid rgba(139, 46, 46, 0.3);
     font-family: system-ui, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .badge:hover {
+    background: rgba(139, 46, 46, 0.25);
+    transform: translateY(-1px);
   }
   .badge-trio {
     background: rgba(59, 47, 32, 0.1);
@@ -158,7 +156,6 @@
     font-weight: bold;
   }
 
-  /* ── Раскрывашки ── */
   details {
     background: rgba(59, 47, 32, 0.04);
     border-left: 2px solid var(--red);
@@ -176,9 +173,8 @@
     letter-spacing: 0.3px;
   }
   summary:hover { color: var(--red-bright); }
-  details p { margin-top: 0.4rem; color: var(--ink-soft); }
+  details p { margin-top: 0.4rem; color: var(--ink-soft); line-height: 1.5; }
 
-  /* ── Блоки в глоссарии ── */
   .glossary-block {
     background: var(--paper);
     color: var(--ink);
@@ -203,8 +199,23 @@
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px dashed rgba(176, 156, 126, 0.4);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
   }
-  .glossary-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .glossary-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0.5rem; }
+  
+  .highlight-glossary {
+    animation: highlight-pulse 2s ease-in-out;
+  }
+  @keyframes highlight-pulse {
+    0% { background-color: rgba(139, 46, 46, 0.05); }
+    30% { background-color: rgba(139, 46, 46, 0.25); box-shadow: 0 0 12px rgba(139, 46, 46, 0.3); }
+    100% { background-color: rgba(139, 46, 46, 0.05); }
+  }
+
   .glossary-symbol {
     flex-shrink: 0;
     font-size: 1.2rem;
@@ -228,6 +239,7 @@
     color: var(--ink-soft);
     font-style: italic;
   }
+  .glossary-text span br { margin-bottom: 0.3rem; }
 
   @media (max-width: 500px) {
     body { padding: 1rem 0.6rem 3rem; }
@@ -256,55 +268,216 @@
 <div class="tab-panel active" id="series">
 
   <div class="card">
-    <div class="card-title">
-      Личные заметки У Се
+    <div class="card-title">Личные заметки У Се
       <span class="orig-title" onclick="this.classList.toggle('open')">
         <span class="orig-hint">(оригинал ▾)</span>
         <span class="orig-text">Time Raiders, 吴邪私家笔记</span>
       </span>
     </div>
     <div class="card-meta">2025 · сериал</div>
-    <p class="card-desc">Наследник рода расхитителей, ни разу не видевший настоящей гробницы, владелец антикварного магазина и архитектор отправляются в первое приключение... А третий дядя им и говорит: У Се, зайди в гробницу по-человечески. Первая встреча будущих друзей, первые монстры, первые тайны и очень-очень много подозрений.</p>
+    <p class="card-desc">Наследник рода расхитителей, ни разу не видевший настоящей гробницы, владелец антикварного магазина и архитектор отправляются в первое приключение... А третий дядя им и говорит: «У Се, зайди в гробницу по-человечески». Первая встреча будущих друзей, первые монстры, первые тайны и очень-очень много подозрений.</p>
     <div class="badges">
-      <span class="badge badge-trio">▲</span>
-      <span class="badge">Та же арка: 7 звёзд</span>
-      <span class="badge">Та же арка: Гнев моря</span>
-      <span class="badge">Начало</span>
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-1">Та же арка: Лушан-ван</span>
+      <span class="badge" data-glossary="g-2">Та же арка: Гнев моря</span>
+      <span class="badge" data-glossary="g-1">Начало</span>
     </div>
-    <details>
-      <summary>Особенности</summary>
-      <p>Пересъёмка первых книг под руководством самого Саньшу. Цензура потопталась, но не сильно. Атмосфера присутствует.</p>
-    </details>
-    <details>
-      <summary>Если вы знакомы с серией</summary>
-      <p>Начало ремейк-серии с единым кастом.</p>
-    </details>
+    <details><summary>Адекватное описание</summary><p>У Се — архитектор по специальности и владелец антикварного магазина Ушаньцзюй в Ханчжоу. В один из дней к нему приходит человек с загадочным фрагментом шёлковой книги периода Сражающихся царств. И с этого момента начинается удивительное приключение.<br><br>У Се со своим дядей У Саньсином и несколькими помощниками в поисках разгадки отправляется в Шаньдун, в древнюю гробницу Лу Шан-вана, знакомясь с загадочным молчаливым юношей по имени Чжан Цилин и веселым парнем по прозвищу Ван Панцзы. Их ожидают опасные путешествия, древние тайны, механизмы, что веками ждали своей жертвы, и легенды, которые оживают, едва к ним прикоснёшься.</p></details>
+    <details><summary>Особенности</summary><p>Пересъёмка первых книг под руководством самого Саньшу. Цензура потопталась, но не сильно. Атмосфера присутствует.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Начало ремейк-серии с единым кастом.</p></details>
   </div>
 
   <div class="card">
-    <div class="card-title">
-      Затерянная гробница
+    <div class="card-title">Затерянная гробница
       <span class="orig-title" onclick="this.classList.toggle('open')">
         <span class="orig-hint">(оригинал ▾)</span>
         <span class="orig-text">The Lost Tomb, 盜墓筆記</span>
       </span>
     </div>
     <div class="card-meta">2015 · сериал</div>
-    <p class="card-desc">У Се и ко разносят первую в жизни гробницу с целью спасения культурного наследия.</p>
+    <p class="card-desc">У Се и Ко разносят первую в жизни гробницу с целью спасения культурного наследия.</p>
     <div class="badges">
-      <span class="badge badge-trio">▲</span>
-      <span class="badge">Та же арка: 7 звёзд</span>
-      <span class="badge">Та же арка: Аукцион</span>
-      <span class="badge">Начало</span>
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-1">Та же арка: Лушан-ван</span>
+      <span class="badge" data-glossary="g-7">Та же арка: Аукцион</span>
+      <span class="badge" data-glossary="g-1">Начало</span>
     </div>
-    <details>
-      <summary>Особенности</summary>
-      <p>Очень по мотивам, смешались змеи, шиби, люди... Отхождения от сюжета внезапны и кусучи. Во всём виноват Цю Декао (с) — или, возможно, Ваны.</p>
-    </details>
-    <details>
-      <summary>Если вы знакомы с серией</summary>
-      <p>Возможность оценить атмосферу самого первого сериала.</p>
-    </details>
+    <details><summary>Адекватное описание</summary><p>У Се — владелец антикварного магазина, родом из семьи расхитителей гробниц. Когда он находит загадочную карту, он показывает ее своему дяде, У Саньсину. У Саньсин понимает, что карта может привести его к сокровищам Сражающихся царств, и решает отправиться на их поиски, набирая команду: тихого Чжана Цилина, продвинутого мистера Хай, верного помощника Паньцзы, умелую А Нин — и У Се.</p></details>
+    <details><summary>Особенности</summary><p>Очень по мотивам, смешались змеи, шиби, люди... Отхождения от сюжета внезапны и кусучи. Во всём виноват Цю Декао (с) — или, возможно, Ваны.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Возможность оценить атмосферу самого первого сериала.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница 2: Гнев моря & Волшебное дерево Циньлина
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Lost Tomb 2, 盗墓笔记之怒海潜沙&秦岭神树</span>
+      </span>
+    </div>
+    <div class="card-meta">2019 · сериал</div>
+    <p class="card-desc">Второе и третье приключение У Се. На дно от морское, в подгорной от тьме — везде есть шанс нарваться на неприятности! Не стоит верить мутным личностям, даже если ты их давно знаешь (с)</p>
+    <div class="badges">
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-2">Та же арка: Гнев Моря</span>
+      <span class="badge" data-glossary="g-3">Та же арка: Бронзовое древо</span>
+      <span class="badge" data-glossary="g-4">Та же арка: Небесный дворец</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Продолжение первого сезона с новыми актерами. За основу взяты две арки романа — «Подводная гробница. Гнев моря» и «Волшебное дерево Циньлина».</p></details>
+    <details><summary>Особенности</summary><p>Мрачные кадры, много блужданий. Внезапные флэшбэки, арки и герои, коих в этой части по книге быть не должно.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Корабль-призрак! А ещё кукловоды-светлячки, роботы-убийцы, семейные разборки Се и аукцион, но не тот, что в Синьюэ.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница 2: Небесный дворец над облаками
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Lost Tomb 2: Heavenly Palace on the Clouds, 盗墓笔记之云顶天宫</span>
+      </span>
+    </div>
+    <div class="card-meta">2021 · сериал</div>
+    <p class="card-desc">Четвертое приключение У Се. А на горе Чанбайшань неприятности во-о-от такой глубины… И кусачести. Все будут здесь: и иностранцы, и знакомцы, и мастера прошлого, и хтони. И, конечно, рыбки и бронза.</p>
+    <div class="badges">
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-4">Та же арка: Небесный дворец</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>У Се, Чжан Цилин и Ван Панцзы оказываются в поезде, направляющемся к гористой корейской границе, в поисках таинственного мифического дворца в мире ледников, лавин и метелей. Они понятия не имеют, почему У Саньсин отправил сообщение, которое снова свело их вместе, но вскоре обнаруживают, что не только они ищут вершину, на которой находится дворец.</p></details>
+    <details><summary>Особенности</summary><p>НЕ рекомендуется новичкам и тем, у кого от ООСа полыхает. Есть многоножки и не только, исполненные в специфической компьютерной графике. Во всём виноват Цю Декао (с) (а ещё Саньшу и древний архитектор Ван Цзахай).</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Только для людей с крепкой психикой.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница 3: Последние хроники
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Ultimate Note, 盗墓笔记之终极笔记</span>
+      </span>
+    </div>
+    <div class="card-meta">2020 · сериал</div>
+    <p class="card-desc">Пятое и шестое приключение У Се. Санаторий с сомнительными экспериментами, знойный ветер пустыни и песчаные лабиринты, джунгли и кто в них обитает… А также о том, как не надо: лечить амнезию; искать бессмертие, загадочные здания и союзников.</p>
+    <div class="badges">
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-heihua">🌸🕶️</span>
+      <span class="badge" data-glossary="g-5">Та же арка: Голмуд</span>
+      <span class="badge" data-glossary="g-5">Та же арка: Тамуто</span>
+      <span class="badge" data-glossary="g-7">Та же арка: Аукцион</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>У Се, Чжан Цилин и Ван Паньцзы продолжили свои приключения в призрачном царстве змей. Чтобы помочь Чжан Цилину восстановить память, они ищут улики на границе Гуанси. Они обнаружили загадочное озеро, под водой которого расположилась древняя деревня Яо. В конце концов, им удалось прибыть в особняк семьи Чжан, где тайна всего этого в конечном итоге раскрылась.</p></details>
+    <details><summary>Особенности</summary><p>«- Сколько комедии вы хотите? - Да» — про атмосферу жути здесь почти не слышали. «Видишь Финал? А его нет, не сняли» — повествование оборвется на самом интересном месте.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Упор на юмор. Отклонение от канона: другое знакомство дуэта ХэйХуа.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Тибетский морской цветок
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Adventure behind the Bronze Door, 藏海花</span>
+      </span>
+    </div>
+    <div class="card-meta">2024 · сериал</div>
+    <p class="card-desc">Если копаешь информацию про Сяогэ, есть шанс докопаться до его родственников — или что они докопаются до тебя, У Се проверил. А ещё немножко о мировых заговорах, бронзе и метеоритах.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-9">Цветок</span>
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-zhang">🐉</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>После возвращения У Се в Китай из Непала в 2010 году он находит открытку из Тибета от Братца. Это приводит к ряду событий, раскрывающих тайны прошлого Чжан Цилина.</p></details>
+    <details><summary>Особенности</summary><p>Информация про Сяогэ и семью Чжан! Во всём виноват метеорит (с).</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Лор семьи Чжан. И как У Се дошел до жизни Песчанковой. А в конце маленький телепорт к временам пенсионным.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Песчаное море
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Tomb of the Sea, 沙海</span>
+      </span>
+    </div>
+    <div class="card-meta">2019 · сериал</div>
+    <p class="card-desc">У Се добавляет в трудовую книжку специальности «фотограф» и «босс мафии». Ли Цу добавляет в биографию У Се запись «похититель невинных школьников». Пустыня говорит: «Я вам не рада, шуруйте отсюда».</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-10">Песчанка</span>
+      <span class="badge" data-glossary="g-young">📄</span>
+      <span class="badge" data-glossary="g-glasses">🕶️</span>
+      <span class="badge" data-glossary="g-zhang">🐉</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Ли Цу, обычный старшеклассник, получает в подарок странную шкатулку, и тут же на него нападает неизвестный. Раны на его спине – ключ к разгадке тайны древних гробниц в пустыне Бадын-Джаран. Похититель Ли Цу, таинственный У Се, заставляет юношу следовать за собой. Вместе они сталкиваются с исчезающими людьми на фотографиях, необъяснимыми тенями, мумиями и множеством опасностей.</p></details>
+    <details><summary>Особенности</summary><p>Пустыня, пустыня и ещё раз змеи. Бесячие подростки в центре внимания. Внезапная романтика. Темп довольно бодрый, но эффект «кто все эти люди» удваивается, что вполне соответствует мыслям одного из главных героев.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Вы уже знаете, что такое «Оно»? Тогда мы идём к вам! Никакого Сяогэ в кадре, зато есть локальный заговор против вселенского, мафиозная войнушка и критическое количество змей. Ах да, и некоторые герои обзаводятся… учениками?</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница: Перезагрузка
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Reunion: The Sound of the Providence, 重启之极海听雷</span>
+      </span>
+    </div>
+    <div class="card-meta">2020 · сериал</div>
+    <p class="card-desc">В поисках Саньшу (с). А также о построении карьеры на складах, предсказаниях по метеорологическим явлениям и о том, как не надо себя вести, если есть ограничения по здоровью. Железный Треугольник снова в деле!</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-12">Перезагрузка</span>
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-heihua">🌸🕶️</span>
+      <span class="badge" data-glossary="g-traces">👣</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>История начинается спустя десять лет после событий восьмого тома и рассказывает о новом путешествии У Се, Чжан Цилина и Ван Панцзы, которые пытаются найти пропавшего У Саньсина.</p></details>
+    <details><summary>Особенности</summary><p>Повествование тянется довольно медленно. Внезапная романтика. Во всём виноват Саньшу (с).</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Чуть больше об Эршу. Саньшу снова умудряется всех озадачить, не присутствуя в кадре. Треугольник обзаводится новыми хорошими знакомствами. Список опасной фауны пополняют моллюски.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Южные архивы
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Archives: The Nanyang Mystery, 南部档案</span>
+      </span>
+    </div>
+    <div class="card-meta">2026 · сериал</div>
+    <p class="card-desc">Во времена Республики жили-были два… скажем, детектива, два весёлых Чжана, Чжан Хайлоу и Чжан Хайся. Да угораздило их в дурнопахнущее дело вляпаться. Пришлось расследовать.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-zhang">🐉</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>В первые годы Китайской Республики регион Наньян потрясла серия загадочных событий. Тайные агенты Южного бюро, Чжан Хайлоу и Чжан Хайся, берутся за это дело. В ходе расследования они раскрывают зловещий заговор: местные милитаристы используют ядовитое растение «Сумеречная трава», чтобы посеять хаос. Напарникам предстоит пройти через смертельные испытания, в результате которых Чжан Хайся оказывается парализованным.</p></details>
+    <details><summary>Особенности</summary><p>Тонны стекла. Операторы молодцы, звукорежиссёр — не очень. Цензура очень пыталась проснуться, но получалось у неё так себе.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Лор семьи Чжан, теперь с тропическим вкусом. Во всём виноват метеорит (с).</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Таинственная Девятка
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Mystic Nine, 老九门</span>
+      </span>
+    </div>
+    <div class="card-meta">2016 · сериал</div>
+    <p class="card-desc">Сказ о том, как деды героев жизнь свою жили, гробницы зачищали, Чанша очищали, в неприятности влипали…</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-nine">9</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>В 1933 году на вокзал Чанша приходит странный поезд, заполненный мертвецами и гробами из древних захоронений. Глава Девятки и обороны Чанша Чжан Цишань вместе с друзьями — Эръюэ Хуном и Ци Тецзуем — проникает в шахту и находит загадочную древнюю гробницу, обнаруживая японский заговор.</p></details>
+    <details><summary>Особенности</summary><p>Есть драматичная романтика, которую, возможно, захочется перемотать. К сожалению, нет единых хороших русских субтитров на весь сериал.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Поколение бабули Хо в деле. Во всём виноват метеорит и иностранцы (с), или о том, какими неприятностями развлекалась Девятка. Аукцион Синьюэ, да по времени не тот.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Таинственная Девятка 2
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Mystic Nine against the Coming Storm, 九门</span>
+      </span>
+    </div>
+    <div class="card-meta">2026 · сериал</div>
+    <p class="card-desc">О том, как дедушка У Се, У Лаогоу, и господин Будда ака Чжан Цишань город Чанша делили и спасали. А также о том, что опасны на земле китайской не только метеориты.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-nine">9</span>
+      <span class="badge" data-glossary="g-mystic9">Связь: Девятка</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>В 1930-ом году Чжан Цишань обнаруживает бесследное исчезновение всех членов своего отряда №401. В ходе расследования он находит таинственное место под названием Гэшилоу, сокрытое глубоко под землёй. Чтобы разобраться в ситуации, он привлекает У Лаогоу. Эти двое готовы отбросить годами копившиеся обиды ради спасения людей.</p></details>
+    <details><summary>Особенности</summary><p>НЕ рекомендуется для новичков, высокая степень закуренности объяснений даже по меркам гробниц. Стекло и абсурд. Цензуру умилостивили патриотизмом — вы знаете, что это значит.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Тяжело ложится после книг. Есть отдельные неплохие моменты, но в большинстве своём оставляет послевкусие «дайте мне тяньшоу». Впрочем, если вам нравятся Джозеф, Уильям, большая доля непонятностей и приключения, возможно, это ваш вариант.</p></details>
   </div>
 
 </div>
@@ -313,27 +486,169 @@
 <div class="tab-panel" id="films">
 
   <div class="card">
-    <div class="card-title">
-      Расхитители времени
+    <div class="card-title">Расхитители времени
       <span class="orig-title" onclick="this.classList.toggle('open')">
         <span class="orig-hint">(оригинал ▾)</span>
         <span class="orig-text">Time Raiders, 盗墓笔记</span>
       </span>
     </div>
     <div class="card-meta">2016 · фильм</div>
-    <p class="card-desc">Напросился юный У Се из расхитительского рода в гости на работу к дяде, а попал в операцию по спасению мира.</p>
+    <p class="card-desc">Напросился юный У Се, выходец из расхитительского рода, в гости на работу к дяде, а попал на операцию по спасению мира.</p>
     <div class="badges">
-      <span class="badge badge-trio">▲</span>
-      <span class="badge">Начало</span>
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-1">Начало</span>
     </div>
-    <details>
-      <summary>Особенности</summary>
-      <p>Очень по мотивам, AU в духе голливудских боевиков. Во всём виноват Цю Декао (с). Дичь, но задорно. При желании можно найти кучу каноничных и философских деталей. Без желания — посмеяться и оценить утанцовывание от ловушек.</p>
-    </details>
-    <details>
-      <summary>Если вы знакомы с серией</summary>
-      <p>Кто уже в курсе, найдёт зачатки знакомых идей и мыслей, моменты для построения теорий.</p>
-    </details>
+    <details><summary>Адекватное описание</summary><p>«Девять Семей» — тайное общество расхитителей гробниц. У Се, молодой наследник торговой династии У, с детства был очарован древними артефактами. Однажды в его руки попадает ключ к гробнице древнего мастера Железной Маски. Из его последних записок герой узнает местоположение в пустыне Гоби древнего города мифической Змеиной Царицы из сказочной страны Тамуто.</p></details>
+    <details><summary>Особенности</summary><p>Очень по мотивам, AU в духе голливудских боевиков. Во всём виноват Цю Декао (с). Дичь, но задорно.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Найдутся зачатки знакомых идей и мыслей, моменты для построения теорий.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Таинственная девятка: Иная история
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Mystic Nine Side Story, 老九门番外</span>
+      </span>
+    </div>
+    <div class="card-meta">2016 · фильм</div>
+    <p class="card-desc">Сборник фильмов про некоторых членов Девятки. Один фильм — одна история.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-nine">9</span>
+      <span class="badge" data-glossary="g-mystic9">Связь: Девятка</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>История про Эръюэ Хуна и японцев — «Цветы, что распускаются в феврале»; история про третью госпожу Хо и загадочный дом — «Месть водного призрака»; история про Се Цзю и семейные загадки — «Сливовый тигр»; история про юность Чэнь Пи и реки крови — «Чэнь Пи против Хуан Куя».</p></details>
+    <details><summary>Особенности</summary><p>Драма, стекло, ужасы, тлен, кладбище. Каждый фильм оставит больше вопросов, чем ответов. Фильм про Чэнь Пи не рекомендуется к просмотру чувствительным людям.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Дополнительные фильмы к «Девятке-1».</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Таинственная девятка: Зеленые горы и бегония
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">The Mystic Nine: Qing Shan Hai Tang, 老九门之青山海棠</span>
+      </span>
+    </div>
+    <div class="card-meta">2022 · фильм</div>
+    <p class="card-desc">О знакомстве Чжан Цишаня и Эръюэ Хуна, моральном долге, сомнительных экспериментах и их последствиях.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-nine">9</span>
+      <span class="badge" data-glossary="g-mystic9">Связь: Девятка</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Молодой Чжан Цишань впервые прибывает в Чанша, где знакомится с выдающимся актёром пекинской оперы Эръюэ Хуном. На своем пути они встретят множество опасностей, будут бороться со злом и противостоять захватчикам Чанша, а также готовому на любые злодеяния военачальнику Цзо Цяньчжи.</p></details>
+    <details><summary>Особенности</summary><p>Во всём виноваты японцы (с). Компьютерная графика скорее рассмешит. Упоминания пыток в начале.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Есть Лю Чан, некоторое количество татуировок, котик и наши любимые маски.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Тибетский морской цветок: Зловещий фонарь заснеженных гор
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Tibetan Sea Flower: Snowy Night, Murderous Lantern, 藏海花之雪夜凶灯</span>
+      </span>
+    </div>
+    <div class="card-meta">2024 · фильм</div>
+    <p class="card-desc">Северные мелкоЧжаны на пути к приключениям. Местная живность на пути к еде. Наемники на пути к награде. В выигрыше остался только неназванный участник событий.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-zhang">🐉</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+      <span class="badge" data-glossary="g-tibetan">Связь: Цветок</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Два юных товарища, Чжан Хайкэ и Чжан Нянь, отправились в Заснеженные горы, ведомые загадочной картой.</p></details>
+    <details><summary>Особенности</summary><p>Смотреть с кричательным тазиком под боком. Слабоумие и отвага, а также шило приличных размеров составляют основу подготовки героев.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>И эти люди сетовали на профессионализм У Се… «Не показывайте это детям». Капля о семье Чжан Няня.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Тибетский морской цветок: Гнев тайной пещеры
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Tibetan Sea Flower: Dark Nest Surge, 藏海花之暗巢汹涌</span>
+      </span>
+    </div>
+    <div class="card-meta">2024 · фильм</div>
+    <p class="card-desc">Северные мелкоЧжаны возвращаются в места, где уже находили приключений на свои задницы. «— Не ходи туда, там тебя ждут неприятности. — Ну как же туда не ходить? Они же ждут!»</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-zhang">🐉</span>
+      <span class="badge" data-glossary="g-past">Прошлое</span>
+      <span class="badge" data-glossary="g-tibetan">Связь: Цветок</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Чжан Хайкэ и Чжан Нянь вернулись из темной пещеры Гуло, думая, что все затихло. Однако Чжан Няня похитили. Чжан Хайкэ отправился на его поиски.</p></details>
+    <details><summary>Особенности</summary><p>Фильм пытается быть хоррором, иногда у него получается. Присутствуют пытки и домогательства. Смотреть только ПОСЛЕ «Зловещего фонаря»!</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Больше бронзы! Присутствует семья Ван.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница: Перезагрузка: Будда из змеиной кости
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Reunion: Escape from the Monstrous Snake, 重启之蛇骨佛蜕</span>
+      </span>
+    </div>
+    <div class="card-meta">2021 · фильм</div>
+    <p class="card-desc">Сольное приключение Хэй Сяцзы в мокрых-мокрых джунглях. Разумеется, не обойдется без змей.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-glasses">🕶️</span>
+      <span class="badge" data-glossary="g-reunion-era">Связь: Перезагрузка</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Спасая давних товарищей по оружию, Чёрным Очкам предстоит углубиться в дремучий лес Камбоджи, познать неизведанный мир древности, лицом к лицу столкнуться со странными червями и другими опасностями, прежде чем всё же раскрыть тайну исчезновения товарищей в подземелье.</p></details>
+    <details><summary>Особенности</summary><p>Косплей Леголаса с нескончаемыми патронами, хищные растения, независимая дама в беде.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Кипарис возвращается! После титров намек на «Слепую гробницу».</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Перезагрузка: Бездна ложной гробницы
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Restart: Mystery of the Abyss, 重启之深渊疑冢</span>
+      </span>
+    </div>
+    <div class="card-meta">2022 · фильм</div>
+    <p class="card-desc">ХэйХуа, джунгли, лавкрафтовщина по-туземному. Затяжная «я спасу тебя — нет, я спасу тебя» ситуация, пока на фоне что-то (и кто-то) катится в бездну.</p>
+    <div class="badges">
+      <span class="badge" data-glossary="g-heihua">🌸🕶️</span>
+      <span class="badge" data-glossary="g-reunion-era">Связь: Перезагрузка</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Черные Очки, чье заболевание глаз обострилось, собирается уйти от дел. Однако его хороший друг Се Юйчэнь не готов смириться с тем, что тот останется слеп до конца своих дней, и решает лично возглавить экспедицию в чащу леса в поисках лекарства. Но все пошло не по плану.</p></details>
+    <details><summary>Особенности</summary><p>Осторожно, мерзкие кадры паразитов. Экшн-фильм как он есть.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Неожиданное приключение дуэта, очередная попытка найти средство для глаз Хэй Сяцзы. Сцена после титров намекает на Ночь.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница: Город проклятого песка
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Conjuring Curse, 介子鬼城</span>
+      </span>
+    </div>
+    <div class="card-meta">2023 · фильм</div>
+    <p class="card-desc">Если не тайны дядюшки, то тайны дедушки куснут У Се за хвост. И снова ползем в пустыню, и снова летим в гробницу…</p>
+    <div class="badges">
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-reunion-era">Связь: Перезагрузка</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Таинственное письмо, адресованное покойному дедушке У Се, нарушило спокойную жизнь Железного Треугольника. Ребята оказались втянуты в очередное интересное и опасное приключение: поездка в пустыню Гоби, монгольские бандиты, гробница с таинственными законами и многое другое.</p></details>
+    <details><summary>Особенности</summary><p>Сам-по-себе-фильм. Во всём виноват метеорит (с). Местами жуткая, местами смешная компьютерная графика. Местами ловушки в духе Индианы.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Таймлайн: около «Перезагрузки» и «Записок Юйцунь», пенсионные времена. Присутствует доктор из фильма про ХэйХуа.</p></details>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Затерянная гробница: Дворец черного золота
+      <span class="orig-title" onclick="this.classList.toggle('open')">
+        <span class="orig-hint">(оригинал ▾)</span>
+        <span class="orig-text">Misty Creed, 黑金古殿</span>
+      </span>
+    </div>
+    <div class="card-meta">2023 · фильм</div>
+    <p class="card-desc">Треугольник играет в метеорологов, детективов и дезинфекторов. Результат классический.</p>
+    <div class="badges">
+      <span class="badge badge-trio" data-glossary="g-trio">▲</span>
+      <span class="badge" data-glossary="g-reunion-era">Связь: Перезагрузка</span>
+    </div>
+    <details><summary>Адекватное описание</summary><p>Старик приходит за помощью к У Се, Ван Панцзы и Чжан Цилину с загадочным случаем, произошедшим в юго-западной горной местности. В горах с появлением тумана исчезают жители деревни. В поисках тайны заброшенного рудника черного золота герои обнаруживают, что все странности исходят от загадочных существ глубоко в шахте.</p></details>
+    <details><summary>Особенности</summary><p>Сам-по-себе-фильм. Атмосфера жути на месте! Не рекомендуется есть во время просмотра.</p></details>
+    <details><summary>Если уже знакомы с серией</summary><p>Таймлайн: около «Перезагрузки» и «Записок Юйцунь», пенсионные времена. Славный по взаимодействию, но молодо выглядящий Треугольник. Закадровый Сяо Хуа. Чёрное золото (вспоминаем клинок Сяогэ).</p></details>
   </div>
 
 </div>
@@ -343,112 +658,113 @@
   
   <div class="glossary-block">
     <h2>Символы</h2>
-    
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-trio">
       <div class="glossary-symbol">▲</div>
-      <div class="glossary-text">
-        <strong>Железный Треугольник</strong>
-        <span>У Се, Ван Панцзы, Чжан Цилин</span>
-      </div>
+      <div class="glossary-text"><strong>Железный Треугольник</strong><span>У Се, Ван Панцзы, Чжан Цилин</span></div>
     </div>
-
-    <div class="glossary-item">
-      <div class="glossary-symbol">🌸👓</div>
-      <div class="glossary-text">
-        <strong>ХэйХуа</strong>
-        <span>Хэй Сяцзы, Се Юйчэнь</span>
-      </div>
+    <div class="glossary-item" id="g-heihua">
+      <div class="glossary-symbol">🌸🕶️</div>
+      <div class="glossary-text"><strong>ХэйХуа</strong><span>Хэй Сяцзы, Се Юйчэнь (дуэт)</span></div>
     </div>
-
-    <div class="glossary-item">
-      <div class="glossary-symbol">9</div>
-      <div class="glossary-text">
-        <strong>Мистическая Девятка</strong>
-        <span>Старшее поколение</span>
-      </div>
+    <div class="glossary-item" id="g-glasses">
+      <div class="glossary-symbol">🕶️</div>
+      <div class="glossary-text"><strong>Хэй Сяцзы / Чёрные Очки</strong><span>Сольные приключения или акцент на персонаже</span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-young">
+      <div class="glossary-symbol">📄</div>
+      <div class="glossary-text"><strong>Младшее поколение</strong><span>Ли Цу, Бай Хаотянь и другие новые лица</span></div>
+    </div>
+    <div class="glossary-item" id="g-zhang">
       <div class="glossary-symbol">🐉</div>
-      <div class="glossary-text">
-        <strong>Семья Чжан</strong>
-        <span>Дракон</span>
-      </div>
+      <div class="glossary-text"><strong>Семья Чжан</strong><span>Цилинь, лор клана, северные или южные ветви</span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-nine">
+      <div class="glossary-symbol">9</div>
+      <div class="glossary-text"><strong>Мистическая Девятка</strong><span>Девять врат, старшее поколение, Чанша</span></div>
+    </div>
+    <div class="glossary-item" id="g-traces">
       <div class="glossary-symbol">👣</div>
-      <div class="glossary-text">
-        <strong>Следы</strong>
-        <span>В центре внимания любые другие персонажи</span>
-      </div>
+      <div class="glossary-text"><strong>Следы</strong><span>В центре внимания любые другие второстепенные персонажи</span></div>
     </div>
   </div>
 
   <div class="glossary-block">
-    <h2>Арки книг</h2>
-    
-    <div class="glossary-item">
+    <h2>Арки книг (Основная линия)</h2>
+    <div class="glossary-item" id="g-1">
       <div class="glossary-symbol">1</div>
-      <div class="glossary-text">
-        <strong>«Гробница семи звёзд Лушан-вана»</strong>
-        <span>Первый том · Бейдж: <em>7 звёзд</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Гробница семи звёзд Лушан-вана» (七星鲁王宫)</strong><span>Первый том · Бейдж: <em>Лушан-ван</em></span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-2">
       <div class="glossary-symbol">2</div>
-      <div class="glossary-text">
-        <strong>«Гнев моря, погребённые пески» (怒海潜沙)</strong>
-        <span>Второй том · Бейдж: <em>Гнев моря</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Гнев моря, погребённые пески» (怒海潜沙)</strong><span>Второй том · Бейдж: <em>Гнев моря</em></span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-3">
       <div class="glossary-symbol">3</div>
-      <div class="glossary-text">
-        <strong>«Чудесное древо Циньлина»</strong>
-        <span>Третий том · Бейдж: <em>Бронзовое древо</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Чудесное древо Циньлина» (秦岭神树)</strong><span>Третий том · Бейдж: <em>Бронзовое древо</em></span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-4">
       <div class="glossary-symbol">4</div>
-      <div class="glossary-text">
-        <strong>«Заоблачный небесный дворец»</strong>
-        <span>Четвертый том · Бейдж: <em>Небесный дворец</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Заоблачный небесный дворец» (云顶天宫)</strong><span>Четвертый том · Бейдж: <em>Небесный дворец</em></span></div>
     </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-5">
       <div class="glossary-symbol">5</div>
-      <div class="glossary-text">
-        <strong>«Призрачный город в Змеином болоте» (蛇沼鬼城) & «Назад к морю загадок» (谜海归巢)</strong>
-        <span>Пятый том · Бейджи: <em>Голмуд, Тамуто</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Призрачный город в Змеином болоте» (蛇沼鬼城) & «Назад к морю загадок» (谜海归巢)</strong><span>Пятый том · Бейджи: <em>Голмуд, Тамуто</em></span></div>
     </div>
-
-    <div class="glossary-item">
-      <div class="glossary-symbol">6</div>
-      <div class="glossary-text">
-        <strong>«Древний терем в Иньшань» (阴山古楼)</strong>
-        <span>Шестой том · Бейдж: <em>Банай</em></span>
-      </div>
-    </div>
-
-    <div class="glossary-item">
+    <div class="glossary-item" id="g-7">
       <div class="glossary-symbol">7</div>
-      <div class="glossary-text">
-        <strong>«Каменные тени Цюнлун» (邛笼石影)</strong>
-        <span>Седьмой том · Бейджи: <em>Аукцион, Терем</em></span>
-      </div>
+      <div class="glossary-text"><strong>«Каменные тени Цюнлун» (邛笼石影)</strong><span>Седьмой том · Бейджи: <em>Аукцион, Терем</em></span></div>
     </div>
+    <div class="glossary-item" id="g-9">
+      <div class="glossary-symbol">9</div>
+      <div class="glossary-text"><strong>«Тибетский морской цветок» (藏海花)</strong><span>Девятый том · Бейдж: <em>Цветок</em></span></div>
+    </div>
+    <div class="glossary-item" id="g-10">
+      <div class="glossary-symbol">10</div>
+      <div class="glossary-text"><strong>«Песчаное море» (沙海)</strong><span>Десятый том · Бейдж: <em>Песчанка</em></span></div>
+    </div>
+    <div class="glossary-item" id="g-11">
+      <div class="glossary-symbol">11</div>
+      <div class="glossary-text"><strong>«Десять лет спустя»</strong><span>Нет полноценной экранизации, упоминание в «Цветке»</span></div>
+    </div>
+    <div class="glossary-item" id="g-12">
+      <div class="glossary-symbol">12</div>
+      <div class="glossary-text"><strong>«Перезагрузка» (重启)</strong><span>Двенадцатый том · Бейдж: <em>Перезагрузка</em></span></div>
+    </div>
+    <div class="glossary-item" id="g-banquet">
+      <div class="glossary-symbol">🍽️</div>
+      <div class="glossary-text"><strong>«Банкет»</strong><span>4 части после «Перезагрузки». Пока не экранизированы.</span></div>
+    </div>
+  </div>
 
-    <div class="glossary-item">
-      <div class="glossary-symbol">8</div>
+  <div class="glossary-block">
+    <h2>Спин-оффы и другие книги</h2>
+    <div class="glossary-item" id="g-mystic9">
+      <div class="glossary-symbol">📜</div>
+      <div class="glossary-text"><strong>«Таинственная девятка» и сопутствующие главы</strong><span>Бейдж: <em>Девятка</em> / <em>Связь: Девятка</em></span></div>
+    </div>
+    <div class="glossary-item" id="g-past">
+      <div class="glossary-symbol">⏳</div>
+      <div class="glossary-text"><strong>Прошлое</strong><span>Тег для приквелов и событий, происходящих до основной линии (Республика, молодость героев)</span></div>
+    </div>
+    <div class="glossary-item" id="g-reunion-era">
+      <div class="glossary-symbol">🔄</div>
+      <div class="glossary-text"><strong>Связь: Перезагрузка</strong><span>Таймлайн «Перезагрузки» и «Записок Юйцунь» (пенсионные времена)</span></div>
+    </div>
+    <div class="glossary-item" id="g-tibetan">
+      <div class="glossary-symbol">🏔️</div>
+      <div class="glossary-text"><strong>Связь: Цветок</strong><span>Таймлайн и спин-оффы, связанные с «Тибетским морским цветком»</span></div>
+    </div>
+    <div class="glossary-item" id="g-other-books">
+      <div class="glossary-symbol">📚</div>
       <div class="glossary-text">
-        <strong>«Финал» (大结局)</strong>
-        <span>Восьмой том · Бейджи: <em>Терем, Финал</em></span>
+        <strong>Прочие материалы</strong>
+        <span>
+          • <em>Личные заметки У Се</em> — нет экранизации, сборник записей обо всём.<br>
+          • <em>Заметки Юйцунь</em> — нет экранизации, есть спектакли.<br>
+          • <em>Тысяча лиц</em> (千面) — нет экранизации, есть мюзикл.<br>
+          • <em>Сквозь цветочную ночь: безмолвно опускается занавес</em> (花夜前行 无声落幕) — пока нет экранизации, но обещают.<br>
+          • Многочисленные экстры, спецвыпуски, зарисовки из интервью просто существуют.
+        </span>
       </div>
     </div>
   </div>
@@ -458,12 +774,38 @@
 </div>
 
 <script>
+  // Переключение вкладок
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Интерактив бейджей: переход в глоссарий и подсветка
+  document.querySelectorAll('.badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+      const targetId = badge.getAttribute('data-glossary');
+      if (!targetId) return;
+      
+      // 1. Переключаемся на вкладку глоссария
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('.tab-btn[data-tab="glossary"]').classList.add('active');
+      document.getElementById('glossary').classList.add('active');
+      
+      // 2. Находим нужный элемент и прокручиваем к нему
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // 3. Добавляем анимацию подсветки
+        targetEl.classList.remove('highlight-glossary');
+        void targetEl.offsetWidth; // триггер для перезапуска анимации
+        targetEl.classList.add('highlight-glossary');
+      }
     });
   });
 </script>
