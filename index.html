@@ -8,29 +8,34 @@
 <!-- Фавикон: Бронзовая рыбка -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,50 Q30,20 50,50 T90,50 L85,45 Q70,60 50,50 T15,55 Z' fill='%238b2e2e' stroke='%233b2f20' stroke-width='2'/%3E%3Ccircle cx='75' cy='45' r='3' fill='%233b2f20'/%3E%3C/svg%3E">
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
   :root {
-    --bg: #cbb894;
-    --paper: #f2e8d5;
-    --paper-dark: #e3d5bc;
-    --ink: #3b2f20;
-    --ink-soft: #6b5a43;
-    --red: #8b2e2e;
-    --red-bright: #b03a3a;
-    --border: #b09c7e;
+    --bg: #d4c4a8;
+    --paper: #f5edd8;
+    --paper-dark: #e8dcc4;
+    --ink: #4a3f2f;
+    --ink-soft: #7a6b54;
+    --red: #9c4a4a;
+    --red-bright: #b85a5a;
+    --border: #c4b498;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: 'Merriweather', Georgia, serif;
     background-color: var(--bg);
     /* Текстура пергамента */
     background-image: 
-      radial-gradient(ellipse at 20% 30%, rgba(139, 94, 60, 0.1) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 70%, rgba(101, 67, 33, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 50% 50%, rgba(160, 120, 80, 0.05) 0%, transparent 80%),
-      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      radial-gradient(ellipse at 20% 30%, rgba(160, 130, 90, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(140, 110, 70, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(180, 150, 110, 0.04) 0%, transparent 80%),
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 100% 100%, 20px 20px, 20px 20px;
     color: var(--ink);
     line-height: 1.65;
@@ -41,11 +46,12 @@
 
   header { text-align: center; margin-bottom: 2.5rem; }
   h1 {
-    font-size: 1.9rem;
-    font-weight: normal;
-    letter-spacing: 1px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
     color: var(--ink);
-    text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+    text-shadow: 0 2px 4px rgba(255,255,255,0.3);
   }
   .subtitle {
     color: var(--ink-soft);
@@ -93,7 +99,7 @@
     padding: 1.4rem 1.6rem 1.2rem;
     margin-bottom: 1.6rem;
     position: relative;
-    box-shadow: 2px 4px 12px rgba(60, 40, 20, 0.15);
+    box-shadow: 2px 4px 12px rgba(80, 60, 40, 0.12);
     transform: rotate(-0.3deg);
     transition: transform 0.2s;
   }
@@ -108,9 +114,9 @@
     transform: translateX(-50%) rotate(-1deg);
     width: 80px;
     height: 18px;
-    background: rgba(255, 255, 255, 0.45);
-    border: 1px solid rgba(200, 190, 160, 0.6);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(210, 200, 180, 0.5);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
   }
 
   .card-title {
@@ -146,26 +152,26 @@
     font-size: 0.75rem;
     padding: 0.15rem 0.55rem;
     border-radius: 3px;
-    background: rgba(139, 46, 46, 0.1);
+    background: rgba(156, 74, 74, 0.08);
     color: var(--red);
-    border: 1px solid rgba(139, 46, 46, 0.3);
+    border: 1px solid rgba(156, 74, 74, 0.25);
     font-family: system-ui, sans-serif;
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
   }
   .badge:hover {
-    background: rgba(139, 46, 46, 0.25);
+    background: rgba(156, 74, 74, 0.18);
     transform: translateY(-1px);
   }
   .badge-trio {
-    background: rgba(59, 47, 32, 0.1);
+    background: rgba(74, 63, 47, 0.08);
     color: var(--ink);
-    border-color: rgba(59, 47, 32, 0.3);
+    border-color: rgba(74, 63, 47, 0.25);
     font-weight: bold;
   }
 
   details {
-    background: rgba(59, 47, 32, 0.04);
+    background: rgba(74, 63, 47, 0.03);
     border-left: 2px solid var(--red);
     border-radius: 0 3px 3px 0;
     padding: 0.5rem 0.8rem;
@@ -188,13 +194,15 @@
     color: var(--ink);
     border-radius: 3px;
     padding: 2rem 1.8rem;
-    box-shadow: 2px 4px 12px rgba(60, 40, 20, 0.15);
+    box-shadow: 2px 4px 12px rgba(80, 60, 40, 0.12);
     position: relative;
     border-top: 4px solid var(--red);
     margin-bottom: 2rem;
   }
   .glossary-block h2 {
-    font-size: 1.3rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 600;
     margin-bottom: 1.2rem;
     color: var(--red);
     border-bottom: 1px solid var(--border);
@@ -206,7 +214,7 @@
     gap: 1rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px dashed rgba(176, 156, 126, 0.4);
+    border-bottom: 1px dashed rgba(196, 180, 152, 0.4);
     transition: background-color 0.3s, box-shadow 0.3s;
     border-radius: 4px;
     padding: 0.5rem;
@@ -219,9 +227,9 @@
     animation: highlight-pulse 2s ease-in-out;
   }
   @keyframes highlight-pulse {
-    0% { background-color: rgba(139, 46, 46, 0.05); }
-    30% { background-color: rgba(139, 46, 46, 0.25); box-shadow: 0 0 12px rgba(139, 46, 46, 0.3); }
-    100% { background-color: rgba(139, 46, 46, 0.05); }
+    0% { background-color: rgba(156, 74, 74, 0.03); }
+    30% { background-color: rgba(156, 74, 74, 0.18); box-shadow: 0 0 12px rgba(156, 74, 74, 0.2); }
+    100% { background-color: rgba(156, 74, 74, 0.03); }
   }
 
   .glossary-symbol {
@@ -231,10 +239,10 @@
     text-align: center;
     font-weight: bold;
     color: var(--red);
-    background: rgba(139, 46, 46, 0.08);
+    background: rgba(156, 74, 74, 0.06);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    border: 1px solid rgba(139, 46, 46, 0.2);
+    border: 1px solid rgba(156, 74, 74, 0.15);
   }
   .glossary-text strong {
     display: block;
@@ -265,7 +273,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -489,7 +497,7 @@
       <span class="badge" data-glossary="g-zhang">🐉</span>
       <span class="badge" data-glossary="g-past">Прошлое</span>
     </div>
-    <details><summary>Адекватное описание</summary><p>Ранние времена Республики. На юго-востоке страны ведут свою деятельность “Южные архивы” — организация, расследующая таинственные проишествия. Два юных сотрудника, Чжан Хайлоу и Чжан Хайся, отправляются на задание и оказываются в центре масштабного заговора. Теперь им предстоит спастись из смертельной ловушки — и чуточку спасти мир впридачу.</p></details>
+    <details><summary>Адекватное описание</summary><p>Ранние времена Республики. На юго-востоке страны ведут свою деятельность "Южные архивы" — организация, расследующая таинственные проишествия. Два юных сотрудника, Чжан Хайлоу и Чжан Хайся, отправляются на задание и оказываются в центре масштабного заговора. Теперь им предстоит спастись из смертельной ловушки — и чуточку спасти мир впридачу.</p></details>
     <details><summary>Особенности</summary><p>Тонны стекла. Операторы молодцы, звукорежиссёр — не очень. Цензура очень пыталась проснуться, но получалось у неё так себе.</p></details>
     <details><summary>Если уже знакомы с серией</summary><p>Лор семьи Чжан, теперь с тропическим вкусом. Во всём виноват метеорит (с).</p></details>
   </div>
@@ -698,7 +706,7 @@
       <span class="badge" data-glossary="g-heihua">🌸🕶️</span>
       <span class="badge" data-glossary="g-reunion-era">Связь: Перезагрузка</span>
     </div>
-    <details><summary>Адекватное описание</summary><p>Хэй Сяцзы смирился со своей болезнью, отошёл от дел и поселился в мирной приграничной деревеньке. Он проводит дни, рыбача в глуши. Се Юйчэнь же не теряет надежду вылечить партнёра и отправляется на поиски лекарства. Судьба снова сводит их вместе. Теперь напарникам предстоит вместе спастись из полных опасностей земных недр.</p></details>
+    <details><summary>Адекватное описание</summary><p>Хэй Сяцзы смирился со своей болезнью, отошёл от дел и поселился в мирной приграничной деревеньке. Он проводит дни, рыбача в глуши. Се Юйчэнь же не теряет надежды вылечить партнёра и отправляется на поиски лекарства. Судьба снова сводит их вместе. Теперь напарникам предстоит вместе спастись из полных опасностей земных недр.</p></details>
     <details><summary>Особенности</summary><p>Осторожно, мерзкие кадры паразитов. Экшн-фильм как он есть.</p></details>
     <details><summary>Если уже знакомы с серией</summary><p>Неожиданное приключение дуэта, очередная попытка найти средство для глаз Хэй Сяцзы. Сцена после титров намекает на Ночь.</p></details>
   </div>
