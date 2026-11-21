@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хроники Расхитителей гробниц — каталог книг</title>
+
+<!-- Фавикон: Бронзовая рыбка -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,50 Q30,20 50,50 T90,50 L85,45 Q70,60 50,50 T15,55 Z' fill='%238b2e2e' stroke='%233b2f20' stroke-width='2'/%3E%3Ccircle cx='75' cy='45' r='3' fill='%233b2f20'/%3E%3C/svg%3E">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #d4c4a8;
+    --paper: #f5edd8;
+    --paper-dark: #e8dcc4;
+    --ink: #4a3f2f;
+    --ink-soft: #7a6b54;
+    --red: #9c4a4a;
+    --red-bright: #b85a5a;
+    --border: #c4b498;
+    --warn-bg: #e8d4a8;
+    --warn-border: #b8904a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(ellipse at 20% 30%, rgba(160, 130, 90, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(140, 110, 70, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(180, 150, 110, 0.04) 0%, transparent 80%),
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 20px 20px, 20px 20px;
+    color: var(--ink);
+    line-height: 1.65;
+    padding: 2rem 1rem 4rem;
+    min-height: 100vh;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* ── Навигация между каталогами ── */
+  .cross-nav {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .cross-nav a {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: var(--paper);
+    color: var(--red);
+    text-decoration: none;
+    border: 1px solid var(--red);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .cross-nav a:hover {
+    background: var(--red);
+    color: var(--paper);
+  }
+
+  /* ── Баннер WIP ── */
+  .wip-banner {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-left: 4px solid var(--warn-border);
+    color: #5a4020;
+    padding: 0.7rem 1rem;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
+  }
+
+  header { text-align: center; margin-bottom: 2rem; }
+  h1 {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 2.3rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--ink);
+    text-shadow: 0 2px 4px rgba(255,255,255,0.3);
+  }
+  .subtitle {
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  /* ── Поиск ── */
+  .search-box {
+    margin-bottom: 1.5rem;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box input:focus {
+    border-color: var(--red);
+  }
+  .search-box input::placeholder {
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    display: none;
+  }
+  .no-results.visible { display: block; }
+
+  /* ── Вкладки ── */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { background: rgba(255, 255, 255, 0.2); color: var(--ink); }
+  .tab-btn.active {
+    background: var(--red);
+    color: var(--paper);
+    border-color: var(--red);
+    font-weight: bold;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* ── Блок саги ── */
+  .saga-block {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: 1.4rem 1.6rem 1.2rem;
+    margin-bottom: 1.6rem;
+    position: relative;
+    box-shadow: 2px 4px 12px rgba(60, 40, 20, 0.15);
+    border-left: 4px solid var(--red);
+    transition: transform 0.2s;
+  }
+  .saga-block:hover { transform: translateY(-2px); }
+  .saga-block.hidden { display: none; }
+
+  .saga-title {
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 0.3rem;
+  }
+  .saga-original {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-left: 0.5rem;
+  }
+  .saga-summary {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .saga-note {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--border);
+  }
+
+  /* ── Теги ── */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: rgba(156, 74, 74, 0.08);
+    color: var(--red);
+    border: 1px solid rgba(156, 74, 74, 0.25);
+    font-family: system-ui, sans-serif;
+  }
+
+  /* ── Подблоки (списки экстр) ── */
+  .extras-block {
+    background: rgba(74, 63, 47, 0.04);
+    border-radius: 3px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+  }
+  .extras-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink-soft);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .parts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .parts-list li {
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed rgba(196, 180, 152, 0.5);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .parts-list li:last-child { border-bottom: none; }
+  .parts-list li::before {
+    content: "•";
+    color: var(--red);
+    font-weight: bold;
+    margin-right: 0.6rem;
+    font-size: 1.1rem;
+  }
+  .parts-list li details {
+    display: inline;
+    margin-left: 0.3rem;
+  }
+  .parts-list li details summary {
+    display: inline;
+    font-size: 0.8rem;
+    color: var(--red);
+    cursor: pointer;
+    font-style: italic;
+  }
+  .parts-list li details summary:hover { color: var(--red-bright); }
+  .parts-list li details p,
+  .parts-list li details span {
+    display: inline;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  /* ── Раскрывашки общего типа ── */
+  details.general-note {
+    background: rgba(74, 63, 47, 0.03);
+    border-left: 2px solid var(--red);
+    border-radius: 0 3px 3px 0;
+    padding: 0.5rem 0.8rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+  details.general-note summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--red);
+    font-size: 0.85rem;
+    user-select: none;
+  }
+  details.general-note summary:hover { color: var(--red-bright); }
+  details.general-note p {
+    margin-top: 0.4rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ── Кнопка "Вверх" ── */
+  #back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 45px;
+    height: 45px;
+    background: var(--red);
+    color: var(--paper);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  #back-to-top:hover {
+    transform: translateY(-3px);
+    background: var(--red-bright);
+  }
+
+  /* ── Футер ── */
+  footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 500px) {
+    body { padding: 1rem 0.6rem 3rem; }
+    .saga-block { padding: 1.1rem 1rem; }
+    .tab-btn { font-size: 0.85rem; padding: 0.5rem 0.7rem; }
+    #back-to-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; }
+    .saga-original { display: block; margin-left: 0; margin-top: 0.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="cross-nav">
+  <a href="index.html">← Перейти к каталогу экранизаций</a>
+</div>
+
+<div class="wip-banner">
+  ⚠️ Черновик: каталог находится в активной разработке. Структура, тексты и порядок могут меняться.
+</div>
+
+<header>
+  <h1>Хроники Расхитителей гробниц</h1>
+  <p class="subtitle">каталог книг · заметки</p>
+</header>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Поиск по названию, описанию, персонажам...">
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="past">Прошлое</button>
+  <button class="tab-btn" data-tab="present">Настоящее</button>
+  <button class="tab-btn" data-tab="other">Другое</button>
+</div>
+
+<p class="no-results" id="no-results">По вашему запросу ничего не найдено.</p>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- ══ ПРОШЛОЕ ══ -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="past">
+
+  <div class="saga-block" data-tags="nine others">
+    <div class="saga-title">Таинственная Девятка<span class="saga-original">老九门</span></div>
+    <p class="saga-summary">Времена Республики. В городе Чанша действует расхитительская организация «Девять врат».</p>
+    <p class="saga-note">Рекомендуется читать после Основной серии. Два тома, оба не закончены, много разрозненных глав. Некоторые главы есть в «Личных заметках У Се», некоторые — просто отдельно.</p>
+    <div class="tags">
+      <span class="tag">9</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Девятка-2: произошедшее в Сянси</strong> (老九门之湘西往事) — сцены были в сериале 2026 года, главы входят в «Личные заметки У Се»</li>
+        <li><strong>Девятка: Отрывки</strong> (老九门 - 试读) — сцены частично были в сериале 2026 года</li>
+        <li><strong>Чэнь Пи</strong> (老九门 陈皮阿四番外) — история Чэнь Пи до ученичества у Эр-е</li>
+        <li>Главы Девяти врат:
+          <ul class="parts-list" style="margin-top: 0.3rem; margin-left: 1rem;">
+            <li>Чжан да Фо-е</li>
+            <li>Эр Юэхун & Проблема Эр Юэхуна</li>
+            <li>Баньцзе Ли</li>
+            <li>Чэнь Пи</li>
+            <li>У Лаогоу / Гоу У</li>
+            <li>Безумец Хэйбэй лао Лю</li>
+            <li>Хо Сянгу</li>
+            <li>Провидец Ци Тецзуй</li>
+            <li>Сяо Се Цзю</li>
+            <li>Сватовство Се-У</li>
+            <li>Кунжут</li>
+            <li>Судьба</li>
+            <li>Призрачный автомобиль</li>
+            <li>Неотложное дело</li>
+            <li>Беседа & Под дождём & Противник</li>
+            <li>Чжан да Фо-е — разговор с У Лаогоу</li>
+          </ul>
+        </li>
+        <li><strong>Девятка: Воспоминания</strong> (九门回忆)</li>
+        <li><strong>Болтовня в Юйцунь: Девятка</strong> (雨村谈九门)</li>
+      </ul>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры со вторым поколением</div>
+      <ul class="parts-list">
+        <li><strong>Бело-синий фарфор</strong></li>
+        <li><strong>Первая встреча</strong>, 2 части (初见面系列之吴邪 & 初见面系列之小满哥) — первая часть про рождение У Се, вторая — про Сяомань-гэ</li>
+        <li><strong>Партия</strong> (棋局)</li>
+        <li><strong>Байки семьи У</strong> (吴家碎碎念)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="zhang">
+    <div class="saga-title">Южные Архивы<span class="saga-original">南部档案</span></div>
+    <p class="saga-summary">Времена ранней Республики. Чжан Хайся и Чжан Хайлоу из организации «Южные Архивы» ведут расследования мистических дел.</p>
+    <p class="saga-note">В целом, возможно читать в любое время, но лучше после ознакомления с вопросом «кто есть семья Чжан». Особо тёмная атмосфера, не закончено.</p>
+    <div class="tags">
+      <span class="tag">🐉 Семья Чжан</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Южный Синьцзян: дело Байлэ</strong> (南疆卷百乐案) — Архивы 2</li>
+        <li><strong>Дело о карте, увиденной во сне</strong> (梦中的地图) — одно из дел Чжан Хайлоу</li>
+        <li><strong>Новогодний спецвыпуск 2014: Мир грёз</strong> (2014贺岁篇《幻境》) — У Се времён Песчанки смотрит через змеиный яд историю о разрешении Чжан Цилином и Чжан Хайлоу беды в деревне носу (хэй и), или же «в поисках Бимо»</li>
+        <li><strong>Об исследовании Южных Архивов</strong> (关于南部档案馆的研究)</li>
+        <li><strong>Способ заработать на жизнь</strong> (谋生之道) — деловые разговоры У Се и Чжан Хайкэ</li>
+        <li><strong>Запись на досуге: 2018.12.29</strong> (闲散日记20181229) — Чжаны в Диснейленде</li>
+        <li><strong>Личные заметки У Се: профили членов организации в Пераке</strong> (吴邪的私家笔记2 霹雳州成员侧写)</li>
+        <li><strong>О Западных Архивах</strong> (关于西部档案馆)</li>
+        <li><strong>Фэйкунь-балу: Чжан Чуньтао из семьи Чжан</strong> (飞坤爸鲁～张家人张春桃)</li>
+        <li><strong>Чжан Юэшань</strong> (张悦山)</li>
+        <li><strong>Тринадцать восходов Луны / 13 Юэшань</strong> (月上十三)</li>
+        <li>Отринутые черновики Саньшу для сериала «Южные Архивы»</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- ══ НАСТОЯЩЕЕ ══ -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="present">
+
+  <div class="saga-block" data-tags="triangle">
+    <div class="saga-title">Основная серия</div>
+    <p class="saga-note">Условно закончено, но по факту скорее открытый конец — рекомендуется читать дальше.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+    </div>
+    <ul class="parts-list">
+      <li>«Гробница семи звёзд Лушан-вана» (七星鲁王宫)</li>
+      <li>«Гнев моря, погребённые пески» (怒海潜沙)</li>
+      <li>«Чудесное древо Циньлина» (秦岭神树)</li>
+      <li>«Заоблачный небесный дворец» (云顶天宫)</li>
+      <li>«Призрачный город в Змеином болоте» (蛇沼鬼城) & «Назад к морю загадок» (谜海归巢)</li>
+      <li>«Древний терем в Иньшань» (阴山古楼)</li>
+      <li>«Каменные тени Цюнлун» (邛笼石影)</li>
+      <li>«Финал» (大结局)</li>
+    </ul>
+  </div>
+
+  <div class="saga-block" data-tags="triangle zhang">
+    <div class="saga-title">Тибетский морской цветок<span class="saga-original">藏海花</span></div>
+    <p class="saga-summary">Читать после Основной серии. Действие начинается в 2010 году, когда У Се отправляется в Медог, чтобы узнать больше о Чжан Цилине.</p>
+    <p class="saga-note">2 части, не закончено.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🐉 Семья Чжан</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Отрывок</strong> (试读) — сценка с кроликом, была в сериале</li>
+        <li><strong>Три дня безмолвия</strong> (三日静寂) — про Байму, было в сериале</li>
+        <li><strong>По другую сторону</strong> (彼岸) — сон У Се</li>
+        <li><strong>Память: Чжан Цилин</strong> (追忆@张起灵) — Сяогэ слушает радио</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle heihua young others">
+    <div class="saga-title">Песчаное море<span class="saga-original">沙海</span></div>
+    <p class="saga-summary">Читать после Цветка. ~2014–2015. У Се разрешает мировой заговор «Оно». В этом ему помогают школьник Ли Цу и старые друзья.</p>
+    <p class="saga-note">Условно 4 части, 4 часть происходит раньше, чем 1–3; условно открытый финал или не закончено.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+      <span class="tag">📄 Младшее поколение</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Новогодний спецвыпуск 2015: Семипалый</strong> (2015贺岁篇《七指》) — У Се и Се Юйчэнь в тайной «комнате» загадочного Семипалого архитектора.
+          <details><summary>Связь с каноном</summary> Или же — начало заговора против «Оно».</details>
+        </li>
+        <li><strong>Гуань Гэн</strong> (关根) — запись Лань Тин</li>
+        <li><strong>Что они делают</strong> (他们在干什么集), сборник 1 — зарисовки про разных героев</li>
+        <li><strong>Хэй Сяцзы — наставник</strong> (黑瞎子师傅) & <strong>Робинзонада У Се</strong> (吴邪的孤岛生涯) — про обучение У Се</li>
+        <li><strong>Зарисовка: Ненастоящее новогоднее поздравление, оно же Мафия</strong> (不是贺岁篇的真) — шутка про канон в формате игры в мафию</li>
+        <li><strong>Зарисовка: Арендатор</strong> — как Каньцзянь дом снимал</li>
+        <li><strong>Молчание: о Су Нань</strong> (沉默——关于苏难) — поворотный момент в жизни Су Нань</li>
+        <li><strong>Змеиные сновидения: осознанное дыхание</strong> (蛇梦安般守意) — У Се, Ли Цу и способы справляться с чужими воспоминаниями</li>
+        <li><strong>Дневник Ван Мэна</strong> (王盟日记)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle heihua others">
+    <div class="saga-title">Десять лет спустя<span class="saga-original">十年</span></div>
+    <p class="saga-summary">После Песчанки. 2015 год — время Сяогэ выйти из Бронзовых врат. У Се и Ко спешат забрать друга домой.</p>
+    <p class="saga-note">Закончено.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Десять лет — единственный и неповторимый Паньцзы</strong> (十年仅此一潘子)</li>
+        <li><strong>Тысячелетний дождь прекратился</strong> (千年雨歇)</li>
+        <li><strong>День рождения</strong> (拖了几天的生日段子)</li>
+        <li><strong>День из жизни Се Юйхуа</strong> (解语花的一天)</li>
+        <li><strong>Спецвыпуск НГ-2016: Король рыбалки</strong> (2016贺岁篇《钓王》) — читать ДО Перезагрузки</li>
+        <li><strong>Спецвыпуск НГ-2017: Слепой курган / Слепая могила</strong> (2017贺岁篇《盲塚》) — читать ПОСЛЕ Южных Архивов</li>
+        <li><strong>Приглашение от сяо Чжан-гэ</strong> (来自小张哥的电子邀请函) — читать после Слепого кургана</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle heihua others">
+    <div class="saga-title">Перезагрузка<span class="saga-original">重启</span></div>
+    <p class="saga-summary">Некоторое время спустя после воссоединения команды (~2017). Железный Треугольник возвращается: время искать Саньшу, лечить У Се, спасать товарищей… И просто вспомнить старые проделки.</p>
+    <p class="saga-note">В онлайн-версии за автора частично писало байцзю, в печатной — нежелание заканчивать.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Основание новых Девяти врат</strong> (新九门的建立)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle heihua">
+    <div class="saga-title">ПостПерезагрузка: «Банкет»<span class="saga-original">灯海寻尸 & 万山极夜 & 王母鬼宴</span></div>
+    <p class="saga-summary">Последняя (в данный момент) по таймлайну книга. Железный Треугольник вместе с Цзинь Ваньтаном отправляется во Внутреннюю Монголию, чтобы раскрыть очередную тайну и спасти Хэй Сяцзы и Се Юйчэня.</p>
+    <p class="saga-note">Не закончено.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+    </div>
+    <ul class="parts-list">
+      <li>«В поиске мертвецов в море огней» (灯海寻尸)</li>
+      <li>«Бесконечная ночь в необъятных горах» (万山极夜)</li>
+      <li>«Призрачный пир Сиванму» (王母鬼宴)</li>
+    </ul>
+  </div>
+
+  <div class="saga-block" data-tags="triangle others zhang">
+    <div class="saga-title">Записки Юйцунь<span class="saga-original">雨村笔记</span></div>
+    <p class="saga-summary">Таймлайн: после «Десяти лет спустя», вокруг «Перезагрузки», до ПостПерезагрузки. Пенсионная жизнь Железного Треугольника в провинции Фуцзянь.</p>
+    <p class="saga-note">Закончено, но нет: Саньшу обожает обновлять эту часть. В разделе ниже лежат все экстры, относящиеся к мирной жизни ЖТ, по таймлайну от «Десяти лет» и далее.</p>
+    <details class="general-note">
+      <summary>Почему именно здесь?</summary>
+      <p>Потому что произвол составителя каталога, который решил, что одни экстры лежат здесь, а другие — в более раннем блоке. На объективность и видение самого автора не претендую, имхошная имхошность.</p>
+    </details>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">👣 Другие персонажи</span>
+      <span class="tag">🐉 Семья Чжан</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>Записка из Юйцунь</strong> (来自雨村的便签)</li>
+        <li><strong>Список членов семьи Чжан: 001, Чжан Хайянь</strong> (张家登记名录 | 001张海洋)</li>
+        <li><strong>Семья Чжан на горячих источниках</strong> (张家人泡温泉)</li>
+        <li><strong>Спецвыпуск 817: Смех, звучащий, словно штанга</strong> (杠铃般的笑声)</li>
+        <li><strong>Получение ID</strong> (办身份证 1 & 2)</li>
+        <li><strong>Неверная родословная</strong> (错误的族谱)</li>
+        <li><strong>Ежегодное собрание Сяо Хуа</strong> (小花的年会)</li>
+        <li><strong>Ice Bucket Challenge</strong> (冰桶挑战)</li>
+        <li><strong>Раздумья У Се</strong> (吴邪的小心情)</li>
+        <li><strong>Банкет семьи Чжан в честь дня Середины осени</strong> (张家人的中秋家宴)</li>
+        <li><strong>Черепаха-цзянши</strong> (僵尸龟)</li>
+        <li><strong>Нефрит</strong> (翡翠)</li>
+        <li><strong>Фейерверк</strong> (烟花)</li>
+        <li><strong>Извещение о новогодних выходных в Силаймянь и поздравления от руководителей</strong> (关于喜来眠过年放假的通知以及店长春贺)</li>
+        <li><strong>Спецвыпуск НГ-2024: Шествие божеств</strong> (新年祝福 游神)</li>
+        <li><strong>Леденящие главы Юйцунь: Уксусная дева</strong> (雨村凉卷——醋姑) — заметки У Се о прошлом, времена Республики, связано с Девяткой, не закончено</li>
+        <li><strong>Зарисовка: Чуньцзе / Праздник весны</strong> (春节段子)</li>
+        <li><strong>Иньсы / Нечистивая жертва</strong> (淫祀) — отдельная история о том, как У Се находит неприятности на свою пятую точку даже на пенсии. Забросы удочки на идею демонических божеств</li>
+        <li><strong>Записки Юйцунь: Композиция</strong> (雨村笔记 段子 构图)</li>
+        <li><strong>Так и не увиденное</strong> (应见未见) — серия зарисовок про пейзажи, которые У Се и Панцзы видели, пока Сяогэ был за Вратами. Читать после «Композиции»</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- ══ ДРУГОЕ ══ -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="tab-panel" id="other">
+
+  <div class="saga-block" data-tags="triangle others nine">
+    <div class="saga-title">Личные заметки У Се<span class="saga-original">吴邪私家笔记</span></div>
+    <p class="saga-summary">Читать после Основной серии. Записи У Се о встреченных людях и монстрах, о посещённых местах, о прошлом.</p>
+    <p class="saga-note">Есть главы о членах Таинственной Девятки.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">👣 Другие персонажи</span>
+      <span class="tag">9</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="others heihua">
+    <div class="saga-title">Тысяча лиц<span class="saga-original">千面</span></div>
+    <p class="saga-summary">Действие происходит до событий Тамуто. История татуировщицы А Тоу, нанятой Се Юйчэнем и впутавшейся в загадочные происшествия.</p>
+    <div class="tags">
+      <span class="tag">👣 Другие персонажи</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="heihua">
+    <div class="saga-title">Сквозь цветочную ночь: безмолвно опускается занавес<span class="saga-original">花夜前行 无声落幕</span></div>
+    <p class="saga-summary">Можно читать отдельно, но лучше после ознакомления с Основной серией. Приключения ХэйХуа в России, Японии и Европе.</p>
+    <p class="saga-note">2 части, первая завершена, вторая — нет.</p>
+    <div class="tags">
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Экстры</div>
+      <ul class="parts-list">
+        <li><strong>О действиях Се Юйчэня</strong> (关于解雨臣的行动资料) & <strong>Время игр Се Юйчэня</strong> (解雨臣的游戏时间, 2 части) — о связи «Ночи» с «Банкетом»</li>
+        <li><strong>Гренландская полярная акула</strong> (格陵兰鲨) — где-то в таймлайне «Ночи-2»</li>
+        <li><strong>Байки о боссе, что рассказывал заместитель в старые времена</strong> (那些年二老板吹过的大老板的牛皮（中插阅读）)</li>
+        <li>Отринутые черновики Саньшу: «Сквозь цветочную ночь» (花夜前行), «Господин Саньюань» (三元大人) и «Ночная прогулка по Лувру» (夜游卢浮)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle">
+    <div class="saga-title">Парочка слов о Панцзы / История Панцзы<span class="saga-original">讲一件和胖子有关的事情</span></div>
+    <p class="saga-summary">Читать после Основной серии. Кое-что о юности Ван Панцзы.</p>
+    <p class="saga-note">Ваншот.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="others young">
+    <div class="saga-title">Что они делают 2022<span class="saga-original">他们在干什么集2022</span></div>
+    <p class="saga-summary">Сборник №2, о разных персонажах. В этом довольно много про сотрудников Ушаньцзюй (Лю Сан, Байшэ, Ван Мэн, Кань Цзянь, господин Че), есть главы про песчаное трио, упоминаются Семипалый, Ту Дянь из «Тысячи лиц».</p>
+    <p class="saga-note">Параллельное повествование, несколько линий.</p>
+    <div class="tags">
+      <span class="tag">👣 Другие персонажи</span>
+      <span class="tag">📄 Младшее поколение</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle young others">
+    <div class="saga-title">Что они делают 2024<span class="saga-original">他们在干什么集2024</span></div>
+    <p class="saga-summary">Сборник №3, о разных персонажах. Песчаное трио, дамы из «Тысячи лиц», У Се, проч.-проч.-проч.</p>
+    <p class="saga-note">Нет единой линии, разные зарисовки.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">📄 Младшее поколение</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle zhang">
+    <div class="saga-title">Что они делают 2025<span class="saga-original">他们在干什么集2025</span></div>
+    <p class="saga-summary">У Се вспоминает историю Чжан Хунъяо, целителя из семьи Чжан.</p>
+    <p class="saga-note">Не сборник, а полноценная история. Чжанолор.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🐉 Семья Чжан</span>
+    </div>
+  </div>
+
+  <div class="saga-block" data-tags="triangle zhang heihua young others">
+    <div class="saga-title">Экстры без особой определённости</div>
+    <p class="saga-summary">Сборная солянка из зарисовок, шуточных кусков, чжанолора и недоделок, которые не встали ни в один из блоков выше.</p>
+    <div class="tags">
+      <span class="tag">▲ Треугольник</span>
+      <span class="tag">🐉 Семья Чжан</span>
+      <span class="tag">🌸🕶️ ХэйХуа</span>
+      <span class="tag">📄 Младшее поколение</span>
+      <span class="tag">👣 Другие персонажи</span>
+    </div>
+
+    <div class="extras-block">
+      <div class="extras-title">Список</div>
+      <ul class="parts-list">
+        <li><strong>Спецвыпуск НГ-2009</strong> (下面的盗墓笔记贺岁篇2014其实是贺岁篇2009) — мистика в Маошацзин, родной деревне У. Присутствует У Се и старшие представители семьи (второе поколение)</li>
+        <li><strong>Парни в душевой</strong> (浴室里的男人们) — игра в баскетбол</li>
+        <li><strong>Зарисовки во время трансляции</strong> (在我的世界直播里打出的小段子): Маджонг & Стрим — Эршу играет с У Се и Панцзы в маджонг; У Се и Панцзы осваивают современные технологии</li>
+        <li><strong>Неназванная история: призрачное пиршество Сиванму</strong> (无名故事 王母鬼宴) — встреча У Се с неким автором</li>
+        <li><strong>9 неотправленных писем</strong> ([插播]520未寄出的九封信) — стеклянное</li>
+        <li><strong>Кока-кола</strong> (微博段子可口可乐) — предположительно, рекламное, шуточное</li>
+        <li><strong>Зарисовка ко дню рождения У Се</strong> (0305生日大段子) — абсурдное</li>
+        <li><strong>О грязных лицах / нечистой стороне</strong> (关于脏面) — чжанолор</li>
+        <li><strong>Результаты исследования семьи Чжан, часть первая</strong> (张家研究报告1) — чжанолор, о тяньшоу</li>
+        <li><strong>Печь для трупосожжения на Змеином кряже</strong> (蛇岭尸窑) — где-то до «Десяти лет», не закончено</li>
+        <li><strong>Дорога Инь-Ян</strong> (阴阳路) — ХэйХуа в Пекине</li>
+        <li><strong>Призрачное видение</strong> (虚景) — У Се и Сяо Хуа пьют чай и философствуют</li>
+        <li><strong>Что они делают: байки ламы — Человек-с-почками</strong> (他们在干什么集 夹喇嘛段子-肾人) — Се Юйчэнь приехал нанять странного работника</li>
+        <li><strong>Парашютист</strong> (伞兵) — Се Юйчэнь, вертолёт и сигнал для Хэй Сяцзы</li>
+        <li><strong>Качели</strong> (秋千) — У Се расспрашивает даму Чжан</li>
+        <li><strong>Ледяная броня</strong> (铁衣寒) — непонятное прошлое</li>
+        <li>Отброшенные черновики Саньшу</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<footer>
+  Фанатский проект. Мнение исключительно субъективное и несерьёзное. Все права на оригинальные произведения принадлежат авторам.
+</footer>
+
+<button id="back-to-top" title="Вернуться наверх">↑</button>
+
+<script>
+  // Словарь тегов для поиска
+  const tagDictionary = {
+    'triangle': 'треугольник у се ван панцзы чжан цилин железный',
+    'zhang': 'чжан семья цилинь тяньшоу хайлоу хайся хайкэ нянь чуньтао хунъяо хайянь',
+    'nine': 'девятка врат чанша цишань юэхун тецзуй лао лю хянгу лаогоу баньцзе чэнь пи се цзю',
+    'heihua': 'хэйхуа хэй сяцзы се юйчэнь сяо хуа очки цветочек слепой',
+    'young': 'младшее поколение ли цу бай хаотянь байшэ лю сан ван мэн кань цзянь су нань',
+    'others': 'другие персонажи эршу саньшэн саньшу а нин хо даофу ло ча цзинь ваньтан ту дянь а тоу'
+  };
+
+  // Переключение вкладок
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      updateNoResults();
+    });
+  });
+
+  // Поиск
+  const searchInput = document.getElementById('search');
+  const noResults = document.getElementById('no-results');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    const blocks = document.querySelectorAll('.saga-block');
+
+    blocks.forEach(block => {
+      if (!query) {
+        block.classList.remove('hidden');
+        return;
+      }
+
+      // Собираем весь searchable текст
+      const title = block.querySelector('.saga-title')?.textContent.toLowerCase() || '';
+      const summary = block.querySelector('.saga-summary')?.textContent.toLowerCase() || '';
+      const note = block.querySelector('.saga-note')?.textContent.toLowerCase() || '';
+      const extras = block.querySelector('.extras-block')?.textContent.toLowerCase() || '';
+      const partsList = block.querySelector('.parts-list')?.textContent.toLowerCase() || '';
+
+      // Расширяем теги через словарь
+      const rawTags = (block.dataset.tags || '').split(' ');
+      let expandedTags = '';
+      rawTags.forEach(t => {
+        if (tagDictionary[t]) expandedTags += ' ' + tagDictionary[t];
+      });
+
+      const searchable = `${title} ${summary} ${note} ${extras} ${partsList} ${expandedTags}`;
+
+      if (searchable.includes(query)) {
+        block.classList.remove('hidden');
+      } else {
+        block.classList.add('hidden');
+      }
+    });
+
+    updateNoResults();
+  });
+
+  function updateNoResults() {
+    const activePanel = document.querySelector('.tab-panel.active');
+    const visibleBlocks = activePanel.querySelectorAll('.saga-block:not(.hidden)');
+    const query = searchInput.value.trim();
+
+    if (query && visibleBlocks.length === 0) {
+      noResults.classList.add('visible');
+    } else {
+      noResults.classList.remove('visible');
+    }
+  }
+
+  // Кнопка "Вверх"
+  const backToTopBtn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  });
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
