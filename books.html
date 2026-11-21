@@ -836,6 +836,23 @@
     }
   }
 
+    // Сворачиваем экстры
+  document.querySelectorAll('.extras-block').forEach(block => {
+    const title = block.querySelector('.extras-title');
+    if (!title) return;
+    
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = title.textContent;
+    summary.style.cssText = 'cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-soft); font-weight: bold; margin-bottom: 0.5rem; list-style: none;';
+    summary.style.outline = 'none';
+    
+    title.remove();
+    details.appendChild(summary);
+    block.parentNode.insertBefore(details, block);
+    details.appendChild(block);
+  });
+
   // Кнопка "Вверх"
   const backToTopBtn = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
